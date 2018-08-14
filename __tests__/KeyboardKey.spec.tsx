@@ -9,14 +9,11 @@ import CapsLock from 'material-ui/svg-icons/hardware/keyboard-capslock';
 import Spacebar from 'material-ui/svg-icons/editor/space-bar';
 import Warning from 'material-ui/svg-icons/alert/warning';
 import { shallow, ShallowWrapper } from 'enzyme';
-import * as injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 type KeyboardKeyWrapper = ShallowWrapper<KeyboardKeyProps, void>;
 
 type IconType = {type: typeof React.Component};
-
-injectTapEventPlugin();
 
 const options: any = {
     context: {

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import bind from 'bind-decorator';
-import FlatButton from 'material-ui/FlatButton';
-import Backspace from 'material-ui/svg-icons/content/backspace';
-import Enter from 'material-ui/svg-icons/hardware/keyboard-return';
-import Escape from 'material-ui/svg-icons/action/exit-to-app';
-import Keyboard from 'material-ui/svg-icons/hardware/keyboard';
-import CapsLock from 'material-ui/svg-icons/hardware/keyboard-capslock';
-import Spacebar from 'material-ui/svg-icons/editor/space-bar';
-import Warning from 'material-ui/svg-icons/alert/warning';
+import FlatButton from '@material-ui/core/Button';
+import Backspace from '@material-ui/icons/backspace';
+import Enter from '@material-ui/icons/KeyboardReturn';
+import Escape from '@material-ui/icons/ExitToApp';
+import Keyboard from '@material-ui/icons/keyboard';
+import CapsLock from '@material-ui/icons/KeyboardCapslock';
+import Spacebar from '@material-ui/icons/SpaceBar';
+import Warning from '@material-ui/icons/warning';
 import { MuiTheme } from 'material-ui/styles';
 
 export type KeyboardKeyPressHandler = (key: string) => void;
@@ -27,7 +27,7 @@ export interface KeyboardKeyContext {
 }
 
 interface SpecialIcons {
-    [index: string]: React.ComponentClass<any>;
+    [index: string]: React.ComponentType<any>;
 }
 
 namespace constants {
@@ -58,6 +58,7 @@ export class KeyboardKey extends React.Component<KeyboardKeyProps> {
         keyboardKeyWidth: PropTypes.number.isRequired,
         keyboardKeyHeight: PropTypes.number.isRequired,
         keyboardKeySymbolSize: PropTypes.number.isRequired,
+        disableEffects: PropTypes.bool.isRequired
     };
     public static contextTypes: any = { muiTheme: PropTypes.object.isRequired };
 
@@ -105,14 +106,16 @@ export class KeyboardKey extends React.Component<KeyboardKeyProps> {
                 width: width, 
                 minWidth: width
             },
-            primary: constants.boolTrue,
-            onTouchTap: this.onTouchTap,
+            primary: "" + constants.boolTrue,
+            variant: 'flat',
+            onClick: this.onTouchTap,
             disableFocusRipple: disableEffects,
-            disableKeyboardFocus: disableEffects,
-            disableTouchRipple: disableEffects
+            disableRipple: disableEffects,
+            disableTouchRipple: disableEffects,
+            focusRipple: disableEffects
         };
         if(disableEffects) {
-            flatButtonProps.hoverColor = this.context.muiTheme.flatButton!.color;
+            //flatButtonProps.hoverColor = this.context.muiTheme.flatButton!.color;
         }
         if((key.length <= constants.one) && (key !== constants.spacebar)) {
             if(key.length) {
@@ -121,13 +124,13 @@ export class KeyboardKey extends React.Component<KeyboardKeyProps> {
                 flatButtonProps.disabled = constants.boolTrue;
                 flatButtonProps.label = constants.spacebar;
             }
-            flatButtonProps.labelStyle = { fontSize: size, textTransform: constants.none };
+            //flatButtonProps.labelStyle = { fontSize: size, textTransform: constants.none };
         } else {
             const { specialIcons } =  KeyboardKey;
-            const icon: React.ComponentClass<any> = specialIcons[specialIcons.hasOwnProperty(key) ? key : constants.notFound];
+            const icon: React.ComponentType<any> = specialIcons[specialIcons.hasOwnProperty(key) ? key : constants.notFound];
             flatButtonProps.icon = React.createElement(icon, { style: { width: size, height: size } });
         }
-        return React.createElement(FlatButton,  flatButtonProps);
+        return React.createElement(FlatButton,  flatButtonProps, key);
     }
 };
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
 import { Keyboard, InputHandler } from './../src/index';
 import { extendedKeyboard } from './../src/layouts';
 
@@ -27,8 +27,8 @@ export default class Demo extends React.Component<{}, DemoState> {
         console.warn(`change: ${value}`);
     }
 
-    public constructor() {
-        super();
+    public constructor(props: any) {
+        super(props);
         this.state = { value: '12' };
         this._onInput = this._handleInput.bind(this);
         this._onInputChange = this._handleInputChange.bind(this);
@@ -41,12 +41,16 @@ export default class Demo extends React.Component<{}, DemoState> {
     public render(): JSX.Element {
         const { state, _onInput, _onInputChange } = this;
         const { value } = state;
+        const inputProps = {
+            
+        };
+
         const textField: JSX.Element = (
             <TextField
                 id="field"
                 value={value}
                 style={{ width: 200, height: 60 }}
-                floatingLabelText="Click for a Keyboard" />
+                inputProps={inputProps} />
         );
 
         return (

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import bind from 'bind-decorator';
-import Dialog from 'material-ui/Dialog';
+import Dialog from '@material-ui/core/Dialog';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { KeyboardKey, KeyboardKeyProps } from './KeyboardKey';
 import { KeyboardLayout, kyeboardCapsLockLayout } from './layouts';
@@ -136,7 +136,7 @@ export class Keyboard extends React.Component<KeyboardProps, KeyboardState> {
         onInputValueChange: PropTypes.func,
         correctorName: PropTypes.string,
         corrector:  PropTypes.func,
-        disableEffects: PropTypes.bool
+        disableEffects: PropTypes.bool.isRequired
     };
     public static contextTypes: any = { muiTheme: PropTypes.object };
     public static automaitcOpenPredicate: AutomaitcOpenPredicate = allwaysTruePredicate;
@@ -401,11 +401,11 @@ export class Keyboard extends React.Component<KeyboardProps, KeyboardState> {
         const { innerHeight, innerWidth } = window;
         const { minHeight, height, maxHeight } = (styles ? styles : Keyboard.noStyleHeight);
         const dialogGutter: number = constants.two * desktopGutter!;
-        const styleHeight: number = minHeight ? minHeight : (height ? height : (maxHeight ? maxHeight : constants.zero));
-        const textFieldHeight: number = styleHeight > constants.zero ? styleHeight : Keyboard.calculatedTextFieldHeight(inputTextFieldProps);
+        const styleHeight: number = minHeight ? +minHeight : (height ? +height : (maxHeight ? +maxHeight : +constants.zero));
+        const textFieldHeight: number = +styleHeight > constants.zero ? +styleHeight : +Keyboard.calculatedTextFieldHeight(inputTextFieldProps);
         let transformTop: number = desktopKeylineIncrement!;
         let dialogWidth: number = (maxKeyboardRowLength * keyWidth) + dialogGutter;
-        let dialogHeight: number = (keyboardRowLength * keyHeight) + textFieldHeight + dialogGutter;
+        let dialogHeight: number = keyboardRowLength * keyHeight + textFieldHeight + dialogGutter;
         const maxDialogHeight: number = innerHeight - constants.sixteen;
         const dialogSpacingTop: number = maxDialogHeight - dialogHeight;
         const overwriteWidth: boolean = dialogWidth > innerWidth;
@@ -429,13 +429,13 @@ export class Keyboard extends React.Component<KeyboardProps, KeyboardState> {
                 keySymbolSize = smallerSymbolSize;
             }
         }
-        const dialogContentStyle: React.CSSProperties = {
-            width: dialogWidth,
-            maxWidth: innerWidth,
-            height: dialogHeight,
-            maxHeight: maxDialogHeight,
-            transform: `translate(0, ${transformTop}px)`
-        };
+        // const dialogContentStyle: React.CSSProperties = {
+        //     width: dialogWidth,
+        //     maxWidth: innerWidth,
+        //     height: dialogHeight,
+        //     maxHeight: maxDialogHeight,
+        //     transform: `translate(0, ${transformTop}px)`
+        // };
         let keyboardRows: Array<KeyboardRow> = [];
         let keyboardRowKeys: Array<KeyboardRowKey>;
         let notSpacebar: boolean;
@@ -463,11 +463,7 @@ export class Keyboard extends React.Component<KeyboardProps, KeyboardState> {
         const keyboard: JSX.Element = (
             <div style={styles}>
                 {inputTextField}
-                <Dialog
-                    open={open}
-                    modal
-                    autoDetectWindowHeight={constants.boolFalse}
-                    contentStyle={dialogContentStyle}>
+                <Dialog open={open}>
                         <div>
                             {keyboardTextField}
                             {keyboardRows}

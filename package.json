@@ -34,7 +34,6 @@
     "react-dom": "^16.4.2"
   },
   "devDependencies": {
-    "@material-ui/core": "^3.0.1",
     "@material-ui/icons": "^2.0.1",
     "@types/deep-equal": "^1.0.0",
     "@types/enzyme": "^2.8.3",

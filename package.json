@@ -30,7 +30,6 @@
     "url": "git+https://github.com/NoHomey/react-material-ui-keyboard.git"
   },
   "peerDependencies": {
-    "@material-ui/core": "^3.0.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
   },
